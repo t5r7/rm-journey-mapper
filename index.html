@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>rm mapper</title>
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+	<style>
+		html, body {
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: sans-serif;
+			display: flex;
+		}
+
+		div#map {
+			width: 100%;
+			height: 100vh;
+		}
+
+		div#intro, div#leaderboard-container {
+			padding: 1em;
+			height: calc(100vh - 2em);
+			overflow: auto;
+		}
+
+		div#leaderboard-container {
+			display: none;
+		}
+
+		ol#leaderboard {
+			padding: 0;
+			margin: 0;
+		}
+
+		ol li {
+			margin-top: 1em;
+			padding: 1em;
+
+			display: flex;
+			border: 2px solid #000;
+
+			cursor: pointer;
+		}
+
+		ol li:hover {
+			filter: brightness(0.8);
+		}
+
+		ol li:first-child {
+			margin-top: 0;
+		}
+
+		ol li:nth-child(even) {
+			background-color: #ccc;
+		}
+		
+		/* cheers chatgpt */
+		ol li:nth-child(1) {
+			background-color: #ffd700;
+		}
+
+		ol li:nth-child(2) {
+			background-color: #c0c0c0;
+		}
+
+		ol li:nth-child(3) {
+			background-color: #cd7f32;
+		}
+
+		ol li span.origin, ol li span.dest {
+			font-weight: bold;
+			flex: 3;
+			font-size: 1.2em;
+		}
+
+		ol li span.to {
+			flex: 1;
+		}
+
+		ol li span.count {
+			flex: 2;
+			font-family: monospace;
+			font-size: 2em;
+			font-weight: bolder;
+		}
+	</style>
+</head>
+<body>
+	<div id="intro">
+		<h1>railmiles mapper</h1>
+		<p>view your top railmiles journeys</p>
+
+		<hr>
+
+		<h2>upload export csv</h2>
+		<input type="file" onchange="loadFile(this); this.parentElement.remove();" accept="text/csv" multiple="no" autocomplete="off">
+
+		<hr>
+
+		<p>
+			by <a href="https://tomr.me">tom</a>
+		</p>
+
+		<p>not an official railmiles project</p>
+	</div>
+
+	
+	<div id="map"></div>
+
+	<div id="leaderboard-container">
+		<h1>leaderboard</h1>
+		<ol id="leaderboard"></ol>
+	</div>
+
+	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+	<script src="load-files.js"></script>
+	<script src="parse-csv.js"></script>
+	<script src="mapping.js"></script>
+</body>
+</html>
