@@ -1,4 +1,5 @@
 let journeys = {};
+let stationCounts = {};
 let lines = undefined;
 
 function parseCSV(csv) {
@@ -8,7 +9,8 @@ function parseCSV(csv) {
 
 	if(document.getElementById("starts-with").checked) loopOverLines(1);
 	
-	loadLines();
+	loadJourneyLines();
+	loadStationDots();
 }
 
 function loopOverLines(pass) {
@@ -58,6 +60,18 @@ function loopOverLines(pass) {
 				journeys[crs] = 1;
 			} else {
 				journeys[crs] = journeys[crs] + 1;
+			}
+
+			if (stationCounts[originObj.crsCode] == undefined) {
+				stationCounts[originObj.crsCode] = 1;
+			} else {
+				stationCounts[originObj.crsCode] = stationCounts[originObj.crsCode] + 1;
+			}
+
+			if (stationCounts[destObj.crsCode] == undefined) {
+				stationCounts[destObj.crsCode] = 1;
+			} else {
+				stationCounts[destObj.crsCode] = stationCounts[destObj.crsCode] + 1;
 			}
 
 			// remove line from csv if dealt with

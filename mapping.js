@@ -11,12 +11,12 @@ let map = L.map("map", {
 
 L.tileLayer('https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png', { attribution: `Tiles by <a href="https://carto.com/">Carto</a>` }).addTo(map);
 
-function loadLines() {
+function loadJourneyLines() {
 	const maxCount = Math.max.apply(Math, Object.values(journeys));
 	const minCount = Math.min.apply(Math, Object.values(journeys));
 	
 	const minWeight = 5;
-	const maxWeight = 20;
+	const maxWeight = 25;
 
 	// order the journeys by count
 	const orderedJourneys = {};
@@ -67,6 +67,31 @@ function loadLines() {
 				</li>
 			`;
 		}
+	}
+}
+
+function loadStationDots() {
+	const maxCount = Math.max.apply(Math, Object.values(stationCounts));
+	const minCount = Math.min.apply(Math, Object.values(stationCounts));
+
+	const minWeight = 5;
+	const maxWeight = 25;
+
+	for (const s in stationCounts) {
+		const crs = s;
+		const count = stationCounts[s];
+		
+		const stn = stations.find(sInList => sInList.crsCode == crs);
+
+		const coords = [stn.lat, stn.long];
+
+		L.circle(coords, {
+			color: "white",
+			weight: 1,
+			fillColor: "white",
+			fillOpacity: 0.8,
+			radius: convertRange(count, [minCount, maxCount], [50, 500])
+		}).addTo(map).bindPopup(`${stn.stationName} (${count})`);
 	}
 }
 
