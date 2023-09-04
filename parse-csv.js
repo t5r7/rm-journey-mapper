@@ -1,40 +1,70 @@
 let journeys = {};
+let lines = undefined;
 
 function parseCSV(csv) {
-	const lines = csv.split("\n");
+	lines = csv.split("\n");
 
-	for(const l in lines) {
+	loopOverLines(0);
+	// loopOverLines(1);
+	
+	loadLines();
+}
+
+function loopOverLines(pass) {
+	// pass:
+	// 0 = match names exactly
+	// 1 = match names using starts with
+
+	for (const l in lines) {
 		const line = lines[l];
-		
+
 		// skip empty lines
-		if(line == "") continue;
+		if (line == "") continue;
 		// skip header
-		if(l == 0) continue;
+		if (l == 0) continue;
 
 		const cols = line.split(",");
+		
+		// remove if not mainline rail journey
+		if(cols[19] !== '""') { // RM turns "0" into "" for some reason
+			lines[l] = "";
+			continue;
+		};
+
 		const origin = cols[2];
 		const dest = cols[6];
+
 
 		console.log("=====");
 		console.log(origin, dest);
 
-		const originObj = stations.find(s => cleaner(s.stationName) == cleaner(origin));
-		const destObj = stations.find(s => cleaner(s.stationName) == cleaner(dest));
-		
+		let originObj = undefined;
+		let destObj = undefined;
+
+		if (pass == 0) {
+			originObj = stations.find(s => cleaner(s.stationName) == cleaner(origin));
+			destObj = stations.find(s => cleaner(s.stationName) == cleaner(dest));
+		} else if (pass == 1) {
+			originObj = stations.find(s => cleaner(s.stationName).startsWith(cleaner(origin)));
+			destObj = stations.find(s => cleaner(s.stationName).startsWith(cleaner(dest)));
+		}
+
 		console.log(originObj, destObj);
 
-		if(originObj && destObj) {
+		if (originObj && destObj) { 
 			const crs = `${originObj.crsCode}${destObj.crsCode}`;
-			if(journeys[crs] == undefined) {
+			if (journeys[crs] == undefined) {
 				journeys[crs] = 1;
 			} else {
 				journeys[crs] = journeys[crs] + 1;
 			}
+
+			// remove line from csv if dealt with
+			lines[l] = "";
 		}
 	}
 
-	console.log(journeys);
-	loadLines();
+	console.table(lines);
 }
 
 function cleaner(text) {
