@@ -5,7 +5,8 @@ function parseCSV(csv) {
 	lines = csv.split("\n");
 
 	loopOverLines(0);
-	// loopOverLines(1);
+
+	if(document.getElementById("starts-with").checked) loopOverLines(1);
 	
 	loadLines();
 }

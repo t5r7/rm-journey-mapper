@@ -97,8 +97,20 @@
 
 		<hr>
 
-		<h2>upload export csv</h2>
-		<input type="file" onchange="loadFile(this); this.parentElement.remove();" accept="text/csv" multiple="no" autocomplete="off">
+		<label>
+			upload export csv file<br>
+			<input type="file" onchange="loadFile(this); this.parentElement.parentElement.remove();" accept="text/csv" multiple="no" autocomplete="off">
+		</label>
+
+		<hr>
+
+		<label>
+			match stations using the start of their name. 
+			<input type="checkbox" id="starts-with">
+		</label>
+
+		<br><br>
+		<i>this will produce errors, such as "edinburgh" being<br>interpreted as "edinburgh gateway" rather than "edinburgh waverley."</i>
 
 		<hr>
 
