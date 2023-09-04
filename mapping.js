@@ -12,24 +12,24 @@ let map = L.map("map", {
 L.tileLayer('https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png', { attribution: `Tiles by <a href="https://carto.com/">Carto</a>` }).addTo(map);
 
 function loadJourneyLines() {
-	const maxCount = Math.max.apply(Math, Object.values(journeys));
-	const minCount = Math.min.apply(Math, Object.values(journeys));
+	const maxCount = Math.max.apply(Math, Object.values(journeyCounts));
+	const minCount = Math.min.apply(Math, Object.values(journeyCounts));
 	
 	const minWeight = 5;
 	const maxWeight = 25;
 
-	// order the journeys by count
-	const orderedJourneys = {};
-	Object.keys(journeys).sort(function(a,b){return journeys[b]-journeys[a]}).forEach(function(key) {
-		orderedJourneys[key] = journeys[key];
+	// order the journeyCounts by count
+	const orderedjourneyCounts = {};
+	Object.keys(journeyCounts).sort(function(a,b){return journeyCounts[b]-journeyCounts[a]}).forEach(function(key) {
+		orderedjourneyCounts[key] = journeyCounts[key];
 	});
 
 	document.getElementById("leaderboard-container").style.display = "block";
 	
-	// read the journeys!
-	for (const j in orderedJourneys) {
+	// read the journeyCounts!
+	for (const j in orderedjourneyCounts) {
 		const crs = j;
-		const count = journeys[j];
+		const count = journeyCounts[j];
 
 		const origin = crs.substring(0, 3);
 		const dest = crs.substring(3, 6);

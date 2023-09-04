@@ -1,4 +1,4 @@
-let journeys = {};
+let journeyCounts = {};
 let stationCounts = {};
 let lines = undefined;
 
@@ -56,10 +56,10 @@ function loopOverLines(pass) {
 
 		if (originObj && destObj) { 
 			const crs = `${originObj.crsCode}${destObj.crsCode}`;
-			if (journeys[crs] == undefined) {
-				journeys[crs] = 1;
+			if (journeyCounts[crs] == undefined) {
+				journeyCounts[crs] = 1;
 			} else {
-				journeys[crs] = journeys[crs] + 1;
+				journeyCounts[crs] = journeyCounts[crs] + 1;
 			}
 
 			if (stationCounts[originObj.crsCode] == undefined) {
