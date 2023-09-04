@@ -47,15 +47,14 @@ function loadLines() {
 			const destCoords = [destObj.lat, destObj.long];
 
 			const calculatedWeight = convertRange(count, [minCount, maxCount], [minWeight, maxWeight]);
-			const calculatedOpacity = convertRange(count, [minCount, maxCount], [0.25, 0.99]);
-			const calculatedBrightness = convertRange(count, [minCount, maxCount], [90, 0]);
+			const calculatedHue = convertRange(count, [minCount, maxCount], [0, 100]);
 
 			console.log(originCoords, destCoords, calculatedWeight);
 
 			const line = L.polyline([originCoords, destCoords], {
-				color: `hsl(0, 100%, ${calculatedBrightness}%)`,
+				color: `hsl(${calculatedHue}, 100%, 30%)`,
 				weight: calculatedWeight,
-				opacity: calculatedOpacity
+				opacity: 0.8
 			}).addTo(map).bindPopup(`${originObj.stationName} to ${destObj.stationName} (${count})`);
 
 
