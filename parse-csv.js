@@ -34,9 +34,16 @@ function loopOverLines(pass) {
 			continue;
 		};
 
-		const origin = cols[2];
-		const dest = cols[6];
+		// eval removes the quotes around the string so "station" becomes station
+		let origin = String(eval(cols[2]));
+		let dest = String(eval(cols[6]));
 
+		// replace "edinburgh" with "edinburgh waverley," and "university," with "university (birmingham)"
+		// should not just be a list of replacements, but I'm lazy and it works for now
+		if (origin == "Edinburgh") origin = "Edinburgh Waverley";
+		if (origin == "University") origin = "University (Birmingham)";
+		if (dest == "Edinburgh") dest = "Edinburgh Waverley";
+		if (dest == "University") dest = "University (Birmingham)";
 
 		console.log("=====");
 		console.log(origin, dest);
@@ -83,7 +90,8 @@ function loopOverLines(pass) {
 }
 
 function cleaner(text) {
-	return text.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+	let cleaned = text.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+	return cleaned;
 }
 
 //  0 "rm_product_type"
