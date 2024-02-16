@@ -34,9 +34,9 @@ function loopOverLines(pass) {
 			continue;
 		};
 
-		// eval removes the quotes around the string so "station" becomes station
-		let origin = String(eval(cols[2]));
-		let dest = String(eval(cols[6]));
+		// if there are quotes around the station name, remove them
+		let origin = cols[2].replace(/^"(.*)"$/, "$1");
+		let dest = cols[6].replace(/^"(.*)"$/, "$1");
 
 		// replace "edinburgh" with "edinburgh waverley," and "university," with "university (birmingham)"
 		// should not just be a list of replacements, but I'm lazy and it works for now
